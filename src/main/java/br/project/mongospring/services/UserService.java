@@ -1,6 +1,7 @@
 package br.project.mongospring.services;
 
 import br.project.mongospring.domain.User;
+import br.project.mongospring.dto.UserDTO;
 import br.project.mongospring.repositories.UserRepository;
 import br.project.mongospring.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,11 @@ public class UserService {
     public User findById(String id){
         Optional<User> user = repo.findById(id);
         return user.orElseThrow(()-> new ObjectNotFoundException("Object not found!"));
+    }
+    public User insert(User obj){
+        return repo.insert(obj);
+    }
+    public User fromDTO(UserDTO userDTO){
+        return new User(userDTO.getId(),userDTO.getName(), userDTO.getEmail());
     }
 }
