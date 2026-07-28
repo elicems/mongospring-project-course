@@ -1,5 +1,6 @@
 package br.project.mongospring.domain;
 
+import br.project.mongospring.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,9 +13,16 @@ public class Post {
     private LocalDate date;
     private String tittle;
     private String body;
-    private User author;
+    private AuthorDTO author;
 
     public Post() {
+    }
+    public Post(String id, LocalDate date, String tittle, String body, AuthorDTO author) {
+        this.id = id;
+        this.date = date;
+        this.tittle = tittle;
+        this.body = body;
+        this.author = author;
     }
 
     public String getId() {
@@ -49,19 +57,13 @@ public class Post {
         this.body = body;
     }
 
-    public User getAuthor() {
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
     }
 
-    public Post(String id, LocalDate date, String tittle, String body, User author) {
-        this.id = id;
-        this.date = date;
-        this.tittle = tittle;
-        this.body = body;
-        this.author = author;
-    }
+
 }
