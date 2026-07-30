@@ -1,5 +1,6 @@
 package br.project.mongospring.resources;
 
+import br.project.mongospring.domain.Post;
 import br.project.mongospring.domain.User;
 import br.project.mongospring.dto.UserDTO;
 import br.project.mongospring.services.UserService;
@@ -23,7 +24,7 @@ public class UserResource {
         List<UserDTO> listDTO = list.stream().map(UserDTO::new).toList();
         return ResponseEntity.ok().body(listDTO);
     }
-    @GetMapping(value = "{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         User obj = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(obj));
@@ -40,11 +41,16 @@ public class UserResource {
        service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-    @PutMapping(value = "{id}")
+    @PutMapping(value = "/{id}")
     public ResponseEntity<Void> update(@RequestBody UserDTO objDTO,@PathVariable String id){
         User obj = service.fromDTO(objDTO);
         obj.setId(id);
         obj = service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
